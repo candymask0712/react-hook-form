@@ -29,7 +29,7 @@
     "prebuild": "pnpm clean",
     "build": "pnpm build:modern",
     "build:watch": "pnpm build:modern -w",
-    "postbuild": "node ./scripts/rollup/assert-esm-exports.mjs && node ./scripts/rollup/assert-cjs-exports.cjs",
+    "postbuild": "node ./scripts/rollup/assert-esm-exports.mjs && node ./scripts/rollup/assert-cjs-exports.cjs && node --conditions=react-server ./scripts/rollup/assert-react-server-exports.mjs && node ./scripts/rollup/assert-package-exports.mjs",
     "build:modern": "rollup --bundleConfigAsCjs -c ./scripts/rollup/rollup.config.js",
     "build:esm": "rollup --bundleConfigAsCjs -c ./scripts/rollup/rollup.esm.config.js",
     "prettier:fix": "prettier --config .prettierrc --write .",
@@ -48,7 +48,7 @@
     "api-extractor:ci": "node scripts/apiExtractor.js",
     "postversion": "git push && git push origin v$npm_package_version",
     "prepublishOnly": "pnpm install && pnpm lint:fix && pnpm type && pnpm test && pnpm build",
-    "bundlewatch": "pnpm build:modern && bundlewatch",
+    "bundlewatch": "pnpm build && bundlewatch",
     "start": "pnpm build:esm && cd ./app && pnpm install && pnpm run dev"
   },
   "keywords": [
